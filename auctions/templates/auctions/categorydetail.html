@@ -1,0 +1,30 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}Category Detail{% endblock %}
+
+{% block body %}
+
+
+    {% if items %}
+        {% for item in items %}
+
+        <div class="card bg-light mb-3 border-secondary mb-3">
+        <img src="{{ item.url }}" width="300" alt="Card image cap">
+        <h5 class="card-header">Meme Title: {{ item.listing_name }}</h5>
+            <div class="card-body">
+                <p class="card-text">Meme Seller: {{ item.seller }}</p>
+                <p class="card-text">Meme Start Price: ${{ item.start_price }}</p>
+                <p class="card-text">Meme Auction Created: {{ item.created }}</p>
+                <p class="card-text">Meme Description: {{ item.description }}</p>
+                <p class="card-text">Meme Comedy Category: {{ item.comedy_category }}</p>
+                <p class="card-text">Meme Auction Status: {{ item.active }}</p>
+            </div>
+        </div>
+        <br>
+
+        {% endfor %}
+    {% else %}
+        <p>This category doesn't have any listings yet.</p>
+    {% endif %}
+
+{% endblock %}

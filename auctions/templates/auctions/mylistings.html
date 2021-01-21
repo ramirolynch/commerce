@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+<h2>My Listings</h2>
+
+{% for listing in mylistings %}
+
+
+    <div class="card bg-light mb-3 border-secondary mb-3">
+        <img src="{{ listing.url }}" alt="Card image cap" width="300">
+        <h5 class="card-header">Meme Title: {{ listing.listing_name }}</h5>
+                <div class="card-body">
+                    <p class="card-text">Meme Id: {{ listing.id }}</p>
+                    <p class="card-text">Meme Seller: {{ listing.seller }}</p>
+                    <p class="card-text">Meme Start Price: ${{ listing.start_price }}</p>
+                    {% if listing.latestbid %}
+					<p class="card-text">Meme Current Highest Bid: ${{ listing.latestbid }} by {{ listing.latestbid.bidder }}</p>
+					{% else %}
+					<p class="card-text">Your Meme doesn't have any bids yet :(</p>
+					{% endif %}
+                    <p class="card-text">Meme Auction Created: {{ listing.created }}</p>
+                    <p class="card-text">Meme Description: {{ listing.description }}</p>
+                    <p class="card-text">Meme Comedy Category: {{ listing.comedy_category }}</p>
+                    <p class="card-text">Meme Status: {{ listing.active }}</p>
+                    <a href="{% url 'mylisting' listing.id %}" class="btn btn-primary">Change Status</a>
+                </div>
+    </div>
+    <br>
+
+
+{% empty %}
+
+    <p>You don't have any listings yet.</p>
+
+{% endfor %}  
+
+{% endblock %} 

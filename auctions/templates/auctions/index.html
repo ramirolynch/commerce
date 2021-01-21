@@ -1,0 +1,55 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+		<h2>Active Meme Listings</h2>
+
+			{% for listing in listings %}
+				{% if listing.active %}
+
+				<div class="card bg-light mb-3 border-secondary mb-3">
+					<img src="{{ listing.url }}" alt="Card image cap" width="300">
+					<h5 class="card-header">Meme Title: {{ listing.listing_name }}</h5>
+							<div class="card-body">
+								<p class="card-text">Meme Seller: {{ listing.seller }}</p>
+								<p class="card-text">Meme Start Price: ${{ listing.start_price }}</p>
+								{% if listing.latestbid %}
+								<p class="card-text">Meme Current Highest Bid: ${{ listing.latestbid }} by {{ listing.latestbid.bidder }}</p>
+								{% else %}
+								<p class="card-text">Go to "Meme Detail" to place your bid!</p>
+								{% endif %}
+								<p class="card-text">Meme Auction Created: {{ listing.created }}</p>
+								<p class="card-text">Meme Description: {{ listing.description }}</p>
+								<p class="card-text">Meme Comedy Category: {{ listing.comedy_category }}</p>
+								<a href="{% url 'listing_detail' listing.id %}" class="btn btn-primary"> Meme Detail</a>
+							</div>
+				</div>
+				<br>
+				
+				{% endif %}
+
+				{% if not listing.active and request.user == listing.latestbid.bidder %}
+
+				<h2>You are the winner of this auction!</h2>
+
+				<div class="card bg-light mb-3 border-success mb-3">
+					<img src="{{ listing.url }}" alt="Card image cap" width="300">
+					<h5 class="card-header">Meme Title: {{ listing.listing_name }}</h5>
+							<div class="card-body">
+								<p class="card-text">Meme Seller: {{ listing.seller }}</p>
+								<p class="card-text">Meme Start Price: ${{ listing.start_price }}</p>
+								<p class="card-text">Your winning bid was: ${{ listing.latestbid }}!</p>
+								<p class="card-text">Meme Auction Created: {{ listing.created }}</p>
+								<p class="card-text">Meme Description: {{ listing.description }}</p>
+								<p class="card-text">Meme Comedy Category: {{ listing.comedy_category }}</p>
+								<a href="{% url 'listing_detail' listing.id %}" class="btn btn-primary"> Meme Detail</a>
+							</div>
+		        </div>
+				<br>
+
+				{% endif %}
+					
+		{% endfor %}
+
+{% endblock %}
+

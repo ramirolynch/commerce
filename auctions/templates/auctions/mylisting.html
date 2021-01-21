@@ -1,0 +1,59 @@
+{% extends "auctions/layout.html" %}
+
+
+
+{% block body %}
+
+
+
+   <h2>Change Status</h2>
+    {% if listing.active == True %}      
+        <div class="card bg-light mb-3 border-secondary mb-3">
+            <img src="{{ listing.url }}" alt="Card image cap" width="300">
+                <h5 class="card-header">Meme Title: {{ listing.listing_name }}</h5>
+                    <div class="card-body">
+                        <p class="card-text">Meme Id: {{ listing.id }}</p>
+                        <p class="card-text">Meme Seller: {{ listing.seller }}</p>
+                        <p class="card-text">Meme Start Price: ${{ listing.start_price }}</p>
+                        <p class="card-text">Meme Current Highest Bid: ${{ listing1 }} by {{ bidder }}</p>
+                        <p class="card-text">Meme Auction Created: {{ listing.created }}</p>
+                        <p class="card-text">Meme Description: {{ listing.description }}</p>
+                        <p class="card-text">Meme Comedy Category: {{ listing.comedy_category }}</p>
+                        <p class="card-text">Meme Status: {{ listing.active }}</p>
+                        <form method="POST" action="{% url 'changestatus' listing.id %}">
+                            {% csrf_token %} 
+                            <button type="submit" name="action" value="changestatus" class="btn btn-primary">Close Auction</button>
+                        </form>
+                    </div>
+        </div>
+
+    {% elif listing.active == False %}
+
+    <ul>
+        <li>{{ listing.listing_name }} is not active.</li>
+    </ul>
+
+    {% endif %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}
+
+
+
+
+    
+        
+          
+
+                
+   
+
